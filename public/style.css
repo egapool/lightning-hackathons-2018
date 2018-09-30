@@ -1,16 +1,55 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 800px; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+      body {
+        ont: 13px Helvetica, Arial;
+    width: 800px;
+    margin: 5px auto;
+    list-style: none !important;
+
+      }
 header {
 	position: relative;
+}
+h3 {
+    font-size: 50px;
+}
+h2.name {
+    font-size: 50px;
+    font-style: italic;
+}
+.select-item {
+  cursor: pointer;
+}
+p.description {
+    font-size: 30px;
 }
 span#userName {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+#subjects li {
+  list-style: none;
+  font-size: 20px;
+  padding: 10px;
+      background: #c0ff00;
+      margin: 5px 0;
+}
+span.voted {
+    background: red;
+    padding: 10px;
+    color: #FFF;
+    margin: 0 0 0 20px;
+}
+p.invoice {
+    background: #f1f1f1;
+    font-size: 20px;
+    word-break: break-all;
+    padding: 10px;
 }

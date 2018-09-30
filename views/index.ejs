@@ -136,6 +136,12 @@
         $('#invoice-area .invoice_qr').attr('src',msg.invoice_qr);
         console.log(msg);
       })
+      socket.on('update vote', function(msg){
+        msg.subjects.forEach(function(val,index){
+          $('#subject-'+val.id).find('.voted').html(val.voted);
+        })
+
+      });
     });
   </script>
   </body>
