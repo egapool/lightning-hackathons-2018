@@ -6,5 +6,11 @@
 $ docker-compose up -d
 
 // install npm packages
-$ npm install --save socket.io express mysql ejs moment
+$ npm install --save socket.io express mysql ejs moment serve-static
+
+// start
+node index.js
+
+access localhost:3000
 ```
+

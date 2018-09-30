@@ -2,18 +2,13 @@
 <html>
   <head>
     <title>Vote</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
+    <header>
+      <h1>Vote</h1>
+      <span id="userName"></span>
+    </header>
     <!-- ログインフォーム -->
     <form id="loginForm">
       <div>
@@ -43,6 +38,10 @@
           <div><span class="open"></span>〜<span class="close"></span></div>
         </div>
         <ul id="subjects"></ul>
+        <div id="invoice-area">
+          <p class="invoice"></p>
+          <p><img class="invoice_qr" src="" alt=""></p>
+        </div>
       </div>
       
       <ul id="messages"></ul>
@@ -73,6 +72,7 @@
           // チャット画面表示
           $('#loginForm').hide();
           $('#content').show();
+          $('#userName').html(userName+'さん');
           // ユーザ情報をサーバへ通知する
           socket.emit('login', {
             userID: socket.id,
@@ -100,7 +100,7 @@
 
             subjects = elm.find('#subjects');
             res.subjects.forEach(function(val, index){
-              subjects.append('<li id="subject-'+ val.id +'"><h3>'+val.name+'<span class="voted">'+ val.voted +'</span></h3></li>');
+              subjects.append('<li class="make-invoice" id="subject-'+ val.id +'" data-subject="'+val.id+'" data-election="'+val.election_id+'"><h3>'+val.name+'<span class="voted">'+ val.voted +'</span></h3></li>');
               console.log(val,index);
             });
            console.debug(res);
@@ -111,6 +111,13 @@
 
       $('.to-top').click(function(){
         pageSwitch();
+      })
+
+      $(document).on('click', '.make-invoice', function(){
+        socket.emit('invoice', {
+          subject_id: $(this).attr('data-subject'),
+          election_id: $(this).attr('data-election'),
+        });
       })
 
       $('form#chat').submit(function(){
@@ -124,6 +131,11 @@
       socket.on('new user', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
+      socket.on('invoice', function(msg){
+        $('#invoice-area .invoice').html(msg.invoice);
+        $('#invoice-area .invoice_qr').attr('src',msg.invoice_qr);
+        console.log(msg);
+      })
     });
   </script>
   </body>
